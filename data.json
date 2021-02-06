@@ -1,15 +1,15 @@
 {
-  "people": [
-      { "name": "Dan", "nameLast": "Overlander", "email": "dan_overlander@dell.com", "id": 0 },
-      { "name": "Cat", "nameLast": "Burns", "email": "catherine_burns@dell.com", "id": 1 },
-      { "name": "Weijia", "nameLast": "Sun", "email": "weijia_sun@dell.com", "id": 2 },
-      { "name": "Alice", "nameLast": "Lam", "email": "alice_lam@dell.com", "id": 3 },
+  "members": [
+      { "nameFirst": "Dan", "nameLast": "Overlander", "email": "dan_overlander@dell.com", "id": 0 },
+      { "nameFirst": "Cat", "nameLast": "Burns", "email": "catherine_burns@dell.com", "id": 1 },
+      { "nameFirst": "Weijia", "nameLast": "Sun", "email": "weijia_sun@dell.com", "id": 2 },
+      { "nameFirst": "Alice", "nameLast": "Lam", "email": "alice_lam@dell.com", "id": 3 },
       { "nameFirst": "Chris", "nameLast": "Odom", "email": "chris_odom@dell.com", "id": 4 }
   ],
   "teams": [
-      { "id": 0, "name": "DLS 2.0 - Data Vis", "nick": "Stegos", "members": [ 0 ] },
-      { "id": 1, "name": "DLS 2.0", "nick": "Pteros", "members": [ 0 ] },
-      { "id": 2, "name": "DLS 1.0", "nick": "Trexes", "members": [ 0 ] },
-      { "id": 3, "name": "DLS 2.0 - website", "nick": "Raptors", "members": [ 0 ] }
+      { "id": 0, "name": "DLS 1.0", "nick": "Trexes", "members": [ 0, 1, 2 ] },
+      { "id": 1, "name": "DLS 2.0", "nick": "Pteros", "members": [ 2, 3 ] },
+      { "id": 2, "name": "DLS 2.0 - Data Vis", "nick": "Stegos", "members": [ 3, 4 ] },
+      { "id": 3, "name": "DLS 2.0 - website", "nick": "Raptors", "members": [ 4 ] }
   ]
 }

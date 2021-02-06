@@ -1,139 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/0.5.0/modern-normalize.min.css" />
-    <link rel="stylesheet" href="./style.css" />
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" />
-    <script>
-      hljs.initHighlightingOnLoad();
-    </script>
-    <title>JSON Server</title>
-  </head>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/0.5.0/modern-normalize.min.css" />
+        <link rel="stylesheet" href="./style.css" />
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" />
+        <title>JSON Server</title>
+    </head>
 
-  <body>
-    <header>
-      <nav class="container">
-        <ul id="mainNav">
-        </ul>
-      </nav>
-    </header>
+    <body>
+        <header>
+            <nav class="container">
+                <ul id="mainNav">
+                </ul>
+            </nav>
+        </header>
 
-    <div class="container">
-        <!-- Hero -->
-  <div class="hero">
-    <div class="container">
-      <h1>
-        JSON Server
-      </h1>
+        <div class="container">
+            <div class="container">
+                <main id="main">
 
-      <p class="subtitle">
-        Fake Online REST API for Testing and Prototyping
-      </p>
+                </main>
+            </div>
+        </div>
 
-    </div>
-  </div>
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div id="hero" class="hero">
+                    <div class="container">
+                        <h1>
+                            Team Name Picker
+                        </h1>
 
-  <!-- Main -->
-  <div class="container">
-    <main>
-      <!-- Example -->
-      <h2>Example</h2>
-      <p>
-        Run this code in a console or from any site:
-      </p>
+                        <p class="subtitle">
+                            Because eye contact online sucks
+                        </p>
 
-      <pre><code id="example" class="javascript">fetch('/people/0')
-  .then(response => response.json())
-  .then(json => console.log(json))
-</code></pre>
-
-      <p>
-        <button id="run-button">Try it</button>
-      </p>
-
-      <pre><code id="result" class="json"></code></pre>
-      <span id="run-message">Congrats you've made your first call! 😃 🎉</span>
-
-    </main>
-  </div>
-
-    </div>
-
-    <!-- Footer -->
-    <footer>
-      <div class="container">
-        Gonna replace this footer
-      </div>
-    </footer>
+                    </div>
+                </div>
+            </div>
+        </footer>
 
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
-    <script>
-      console.log("OK");
-      fetch("/teams/")
-          .then(response => response.json())
-          .then(json => {
-            var str = JSON.stringify(json, null, "\t");
+        <script src="//cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const teamId = urlParams.get('team');
+            let teams;
 
-            // Format result
-            result.innerHTML = str
-              .replace(/\n/g, "<br/>")
-              .replace(/\\n/g, " ")
-              .replace(/\t/g, "&nbsp;&nbsp;");
+            fetch("/teams/")
+            .then(response => response.json())
+            .then(json => {
+                teams = json;
+                for (var i = 0; i < json.length; i++) {
+                    var thisTeam = json[i];
+                    var node = document.createElement("LI");  
+                    var nLink = document.createElement("a", {
+                        "id": "team_" + thisTeam.id
+                    });
+                    nLink.setAttribute("href", "?team=" + thisTeam.id);
+                    nLink.textContent = thisTeam.name;
+                    node.appendChild(nLink);
+                    document.getElementById("mainNav").appendChild(node);
+                }
+                listNames();
+            });
 
-            hljs.highlightBlock(result);
+            function listNames() {
+                if (teamId && teams) {
+                    const thisTeam = teams[teamId];
+                    for (var i = 0; i < thisTeam.members.length; i++) {
+                        var thisMemberData;
+                        fetch("/members/" + i)
+                        .then(response => response.json())
+                        .then(json => {
+                            thisMemberData = json;
+                            const thisMember = thisTeam.members[i];
+                            var memberElement = document.createElement("a", {"id": "member" + thisMember});
+                            memberElement.setAttribute("href", "#");
+                            memberElement.className = "member";
+                            memberElement.textContent = thisMemberData.nameFirst + " " + thisMemberData.nameLast;
+                            document.getElementById("main").appendChild(memberElement);
+                        });
 
-            // Show and enable things after API call
-            runButton.disabled = false;
-            runMessage.style.opacity = 1;
-            result.style.opacity = 1;
-          });
+                    }
+                }
+            }
 
-
-      // Use http or https based on location.protocol
-      var example = document.getElementById("example");
-      example.textContent = example.textContent.replace(
-        "http:",
-        location.protocol
-      );
-
-      // Highlight result element
-      var result = document.getElementById("result");
-      hljs.highlightBlock(result);
-
-      // Run example
-      var runButton = document.getElementById("run-button");
-      runButton.onclick = function() {
-        var runMessage = document.getElementById("run-message");
-
-        // Hide or disable things during API call
-        runButton.disabled = true;
-        runMessage.style.opacity = 0;
-        result.style.opacity = 0;
-
-        fetch("/people/0")
-          .then(response => response.json())
-          .then(json => {
-            var str = JSON.stringify(json, null, "\t");
-
-            // Format result
-            result.innerHTML = str
-              .replace(/\n/g, "<br/>")
-              .replace(/\\n/g, " ")
-              .replace(/\t/g, "&nbsp;&nbsp;");
-
-            hljs.highlightBlock(result);
-
-            // Show and enable things after API call
-            runButton.disabled = false;
-            runMessage.style.opacity = 1;
-            result.style.opacity = 1;
-          });
-      };
-    </script>
-  </body>
+/*
+            setTimeout(() => {
+                document.getElementById("hero").style.opacity = "0";            
+                setTimeout(() => {
+                    document.getElementById("hero").style.height = "0";
+                    document.getElementById("hero").style.padding = "0";
+                    setTimeout(() => {
+                        document.getElementById("hero").style.display = "none";
+                    }, 250);
+                }, 250);
+            }, 1000);
+*/
+        </script>
+    </body>
 </html>

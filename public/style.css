@@ -49,6 +49,7 @@ header {
   position: sticky;
   top: 0;
   background: #ffffff;
+  padding-bottom: 6rem;
 }
 
 nav {
@@ -64,9 +65,9 @@ nav ul {
   list-style: none;
 }
 
-nav li:first-of-type {
+nav li {
   flex-grow: 1;
-  text-align: left;
+  text-align: center;
 }
 
 nav li a {
@@ -80,14 +81,6 @@ nav li a i {
   margin-right: 0.5rem;
 }
 
-.hljs {
-  padding: 1rem;
-}
-
-td:first-child {
-  width: 8rem;
-}
-
 .container {
   max-width: 60rem;
   margin: auto;
@@ -95,81 +88,27 @@ td:first-child {
 }
 
 .hero {
-  padding: 6rem 0;
   text-align: center;
-}
-
-.sponsors {
-  margin-bottom: 2rem;
-  padding: 6rem 0;
-  border-width: 1px 0;
-  border-style: solid;
-  border-color: #e4e4e4;
-  text-align: center;
-}
-
-.sponsors h3 {
-  font-size: 1.5rem;
-  font-weight: normal;
-  margin-top: 0;
-  margin-bottom: 2rem;
-}
-
-.box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 20rem;
-  margin: auto;
-  border-radius: 0.2rem;
-  border: 1px dashed currentColor;
-}
-
-.box a {
-  display: inline-block;
-  padding: 4rem;
-  color: inherit;
-}
-
-.sponsors p {
-  margin-top: 2rem;
-  margin-bottom: 0;
+  transition: all .25s linear;
 }
 
 main {
   margin-bottom: 6rem;
 }
 
-#run-button {
-  padding: 0.5rem 1rem;
-  margin-right: 1rem;
-  border-width: 0;
-  border-radius: 0.25rem;
-  background-color: #1e87f0;
-  color: white;
-  cursor: pointer;
-  transition: all 0.25s;
+.member:last-child::after {
+    content: "";
 }
 
-#run-message {
-  opacity: 0;
-  transition: all 0.25s;
+.member::after {
+    content: ", ";
 }
-
-pre {
-  /* hack */
-  background: #f8f8f8;
+a.member {
+    padding: 0 1rem;
 }
 
 ul {
   list-style: none;
-}
-
-#result {
-  margin: 1.5rem 0 0;
-  height: 176px;
-  opacity: 0;
-  transition: all 0.25s;
 }
 
 footer {
